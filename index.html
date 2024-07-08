@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./js/main.js" type="module"></script>
+</head>
+<body>
+    <div id="snakeApp">
+        <table>
+            <tbody>
+                <tr v-for="posY of game.getHeigth()">
+                    <td :data-posx="posX" :data-posy="posY" v-for="posX of game.getWidth()"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" @click="test" value="Left">Left</button>
+        <button type="button" @click="test" value="Right">Right</button>
+        <button type="button" @click="test" value="Up">Up</button>
+        <button type="button" @click="test" value="Down">Down</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+:root{
+    --color1: #3659f5;
+    --color2: #3659f5aa;
+    --color3: #bdbdbd;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-size: 1.6rem;
+}
+
+table{
+    border-spacing: 0;
+    border: 2px solid black;
+    margin: auto;
+}
+
+td{
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid black;
+}
