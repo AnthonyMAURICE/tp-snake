@@ -7,13 +7,12 @@ class SnakeHead extends MovingItems{
         super(posX, posY)
         this.bodyElem = []
         this.direction = Direction.Right
-        this.collision = false
     }
 
     createSnakeBaseBody(){
         this.bodyElem.push(new SnakeBodyElem(this.posX -1, this.posY))
         this.bodyElem.push(new SnakeBodyElem(this.posX -2, this.posY))
-        console.log(this.bodyElem)
+        this.bodyElem.push(new SnakeBodyElem(this.posX -3, this.posY))
     }
 
     setPosX(_newX){
@@ -24,7 +23,7 @@ class SnakeHead extends MovingItems{
         this.posY = _newY
     }
 
-    movingHead(_direction){
+    moving(_direction){
         const lastHeadPos = {
             posX: this.getPosX(),
             posY: this.getPosY()
@@ -45,14 +44,20 @@ class SnakeHead extends MovingItems{
             default:
                 'something went really wrong'
         }
-        if(!this.checkCollision()){
-            this.bodyElem.forEach(function(elem){
-            elem.posX = lastHeadPos.posX
-            elem.posY = lastHeadPos.posY
-        })
-        }else{
-            this.collision = true
+        const temp = {
+            posX: this.bodyElem[0].getPosX(),
+            posY: this.bodyElem[0].getPosY()
         }
+        for(let i = 0; i < this.bodyElem.length; i++){
+            if(i == 0){
+                this.bodyElem[0].moving(lastHeadPos.posX, lastHeadPos.posY)
+            }else{
+
+                this.bodyElem[i].moving(temp.posX, temp.posY)
+                console.log(this.bodyElem[i])
+            }
+        }
+            
     }
 
     checkCollision(){
@@ -61,7 +66,7 @@ class SnakeHead extends MovingItems{
             posX: this.getPosX(),
             posY: this.getPosY()
         }
-        this.bodyElem.forEach(function(elem){
+        this.bodyElem.forEach((elem) => {
             if(elem.posX == headPos.posX && elem.posY == headPos.posY){
                 collided = true
             }else{

@@ -45,7 +45,7 @@ const app = {
             }
         },
         test(e){
-            this.snake.movingHead(e.code)
+            this.snake.moving(e.code)
             this.setSnakePresence()
             this.game.isGameOver = this.snake.collision
             if(this.game.isGameOver){

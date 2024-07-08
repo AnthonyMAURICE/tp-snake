@@ -5,6 +5,11 @@ class SnakeBodyElem extends MovingItems{
         super(itemX, itemY)
     }
 
+    moving(_previousX, _previousY){
+        this.posX = _previousX
+        this.posY = _previousY
+    }
+
 }
 
 export { SnakeBodyElem }
