@@ -19,10 +19,14 @@ const app = {
         setSnakePresence(){
             const gridelems = document.querySelectorAll('td')
             for(let elem of gridelems){
-                if(this.checkIfSnakeHead(elem) || this.checkIfSnakeBody(elem)){
+                elem.style.backgroundColor = 'white'
+                if(this.checkIfSnakeHead(elem)){
                     elem.style.backgroundColor = 'black'
-                }else{
-                    elem.style.backgroundColor = 'white'
+                }
+                for(let item of this.snake.bodyElem){
+                    if(this.checkIfSnakeBody(item, elem)){
+                        elem.style.backgroundColor = 'black'
+                    }
                 }
             }
         },
@@ -33,19 +37,20 @@ const app = {
                 return false
             }
         },
-        checkIfSnakeBody(_elem){
-            for(let item of this.snake.bodyElem){
-                if(item.getPosX() == _elem.dataset.posx && item.getPosY() == _elem.dataset.posy){
-                    return true
-                }else{
-                    return false
-                }
+        checkIfSnakeBody(item, _elem){
+            if(item.getPosX() == _elem.dataset.posx && item.getPosY() == _elem.dataset.posy){
+                return true
+            }else{
+                return false
             }
         },
         test(e){
             this.snake.movingHead(e.code)
             this.setSnakePresence()
-            this.game.isGameOver = this.snake.checkCollision() ? true : false
+            this.game.isGameOver = this.snake.collision
+            if(this.game.isGameOver){
+                console.log('A perdu')
+            }            
         }
     }
 }
