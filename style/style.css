@@ -1,6 +1,6 @@
 :root{
     --color1: #3659f5;
-    --color2: #3659f5aa;
+    --color2: red;
     --color3: #bdbdbd;
 }
 
@@ -25,4 +25,10 @@ table{
 td{
     width: 3rem;
     height: 3rem;
+}
+
+p{
+    text-align: center;
+    font-size: 3rem;
+    color: var(--color2);
 }

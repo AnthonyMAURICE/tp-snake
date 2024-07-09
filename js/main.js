@@ -6,14 +6,14 @@ const app = {
         return {
             game: new Game(),
             snake: new SnakeHead(10, 10),
-            direction: 'Right'
         }
     },
     mounted(){
         this.snake.createSnakeBaseBody()
         this.setSnakePresence()
         const body = document.querySelector("body");
-        body.onkeydown = this.test
+        setInterval(this.move, 500)
+        body.onkeydown = this.setDir
     },
     methods: {
         setSnakePresence(){
@@ -44,12 +44,16 @@ const app = {
                 return false
             }
         },
-        test(e){
-            this.snake.moving(e.code)
+        setDir(e){
+            this.snake.direction = e.code
+        },
+        move(){
+            this.snake.moving()
             this.setSnakePresence()
-            this.game.isGameOver = this.snake.collision
+            this.game.isGameOver = this.snake.checkCollision()
             if(this.game.isGameOver){
-                console.log('A perdu')
+                document.getElementById('game-grid').remove()
+                document.getElementById('lost').textContent = "PERDU !"
             }            
         }
     }
