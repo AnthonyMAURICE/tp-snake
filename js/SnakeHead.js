@@ -24,10 +24,8 @@ class SnakeHead extends MovingItems{
     }
 
     moving(_direction){
-        const lastHeadPos = {
-            posX: this.getPosX(),
-            posY: this.getPosY()
-        }
+        let headPosX = this.getPosX()
+        let headPosY = this.getPosY()
         switch(_direction){
             case Direction.Up.name:
                 this.posY--
@@ -44,20 +42,11 @@ class SnakeHead extends MovingItems{
             default:
                 'something went really wrong'
         }
-        const temp = {
-            posX: this.bodyElem[0].getPosX(),
-            posY: this.bodyElem[0].getPosY()
+        
+        for(let i = this.bodyElem.length - 1; i > 0; i--){
+            this.bodyElem[i].moving(this.bodyElem[i-1].getPosX(), this.bodyElem[i-1].getPosY())
         }
-        for(let i = 0; i < this.bodyElem.length; i++){
-            if(i == 0){
-                this.bodyElem[0].moving(lastHeadPos.posX, lastHeadPos.posY)
-            }else{
-
-                this.bodyElem[i].moving(temp.posX, temp.posY)
-                console.log(this.bodyElem[i])
-            }
-        }
-            
+        this.bodyElem[0].moving(headPosX, headPosY)
     }
 
     checkCollision(){
