@@ -18,9 +18,10 @@
                     <td :data-posx="posX" :data-posy="posY" v-for="posX of game.getWidth()"></td>
                 </tr>
             </tbody>
-            <div v-if="lost">
+            <div id="score-div" v-if="lost">
                 <p  id="lost">PERDU !</p>
-                <p>Votre score : {{ score }}</p>
+                <p>Votre score est de {{ score }} points</p>
+                <button type="button" @click="reload">Recommencer</button>
             </div>
             
         </table>

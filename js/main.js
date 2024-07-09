@@ -1,12 +1,13 @@
 import { Game } from './Game.js'
 import { SnakeHead } from './SnakeHead.js'
 import { Food } from './Food.js'
+import { Bomb } from './Bomb.js'
 
 const app = {
     data() {
         return {
             game: new Game(25, 30, new SnakeHead(10, 10), new Food()),
-            speed: 250,
+            speed: 200,
             lost: false,
             score: 0,
             body: document.querySelector("body")
@@ -36,12 +37,14 @@ const app = {
             this.game.snake.direction = e.code
         },
         move(){
+            let length = this.game.snake.bodyElem.length
             if(!this.game.isGameOver){
             this.game.snake.moving()
             this.game.teleport()
             this.game.setSnakePresence()
             this.game.eat()
             this.game.isGameOver = this.game.snake.checkCollision()
+            
             }else{
                 if(document.getElementById('game-grid') != null){
                     document.getElementById('game-grid').remove()
@@ -49,21 +52,20 @@ const app = {
                 this.lost = true
                 this.launchGame()
             }
-            let length = this.game.snake.bodyElem.length
+            
             if(!this.game.isGameOver && this.game.snake.bodyElem.length > length){
-                this.scoring()
+                this.score++
             }
-        },
-        scoring(){
-            this.score++
         },
         foodDisplay(){
             if(this.game.food.isOnGrid < 3 && !this.lost){
                 this.game.setFood()
                 this.game.food.isOnGrid++
             }
+        },
+        reload(){
+            location.reload()
         }
-        
     }
 }
 
