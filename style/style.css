@@ -1,7 +1,7 @@
 :root{
-    --color1: #3659f5;
+    --color1: darkblue;
     --color2: red;
-    --color3: #bdbdbd;
+    --color3: lightblue;
 }
 
 *{
@@ -14,13 +14,21 @@ html{
 
 body{
     font-size: 1.6rem;
+    background-color: var(--color1);
+}
+
+h1{
+    text-align: center;
+    color: var(--color3);
 }
 
 table{
     border-spacing: 0;
     border: 2px solid black;
     margin: auto;
+    background-color: var(--color3);
 }
+
 
 td{
     width: 3rem;

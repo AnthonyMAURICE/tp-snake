@@ -9,14 +9,20 @@
     <script src="./js/main.js" type="module"></script>
 </head>
 <body>
+    <h1>Snake, the return of the revenge</h1>
     <div id="snakeApp">
+        <p v-if="!lost">Score : {{ score }}</p>
         <table id="game-grid">
             <tbody>
                 <tr v-for="posY of game.getHeigth()">
                     <td :data-posx="posX" :data-posy="posY" v-for="posX of game.getWidth()"></td>
                 </tr>
             </tbody>
-            <p id="lost"></p>
+            <div v-if="lost">
+                <p  id="lost">PERDU !</p>
+                <p>Votre score : {{ score }}</p>
+            </div>
+            
         </table>
     </div>
 </body>
