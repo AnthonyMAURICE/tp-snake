@@ -82,11 +82,11 @@ class Game{
     teleport(){
         if(this.snake.getPosX() == 0 && this.snake.direction == 'ArrowLeft'){
             this.snake.posX = this.width
-        }else if(this.snake.getPosX() == (this.width +1) && this.snake.direction == 'ArrowRight'){
+        }else if(this.snake.getPosX() > this.width && this.snake.direction == 'ArrowRight'){
             this.snake.posX = 0
         }else if(this.snake.getPosY() == 0 && this.snake.direction == 'ArrowUp'){
             this.snake.posY = this.height
-        }else if(this.snake.getPosY() == (this.height + 1) && this.snake.direction == 'ArrowDown'){
+        }else if(this.snake.getPosY() > this.height && this.snake.direction == 'ArrowDown'){
             this.snake.posY = 0
         }else{
             return 'Something went wrong here...'
