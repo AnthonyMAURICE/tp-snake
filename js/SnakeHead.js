@@ -34,7 +34,6 @@ class SnakeHead extends MovingItems{
             default:
                 'something went really wrong'
         }
-        console.log(this.posX)
         for(let i = this.bodyElem.length - 1; i > 0; i--){
             this.bodyElem[i].moving(this.bodyElem[i-1].getPosX(), this.bodyElem[i-1].getPosY())
         }
@@ -55,9 +54,9 @@ class SnakeHead extends MovingItems{
         return collide
     }
 
-    // grow(){
-
-    // }
+    grow(){
+        this.bodyElem.push(new SnakeBodyElem(this.bodyElem[this.bodyElem.length -1].getPosX, this.bodyElem[this.bodyElem.length -1].posY))
+    }
 
 }
 
