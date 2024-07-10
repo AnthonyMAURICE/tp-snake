@@ -3,8 +3,8 @@ class Game{
         this.score = 0
         this.level = 1
         this.isGameOver = false
-        this.height = height + 2
-        this.width = width + 2
+        this.height = height
+        this.width = width
         this.snake = snake
         this.food = food
         this.itemArray = []
@@ -114,7 +114,7 @@ class Game{
         }else if(this.snake.getPosY() > this.height && this.snake.direction == 'ArrowDown'){
             this.snake.posY = 1
         }else{
-            return 'Something went wrong here...'
+            console.log('It\'s normally normal')
         }
     }
 

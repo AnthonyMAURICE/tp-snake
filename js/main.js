@@ -26,7 +26,7 @@ const app = {
     
     methods: {
         launchGame(){
-            this.game = new Game(20, 30, new SnakeHead(15, 10), new Food())
+            this.game = new Game(22, 32, new SnakeHead(15, 10), new Food())
             this.game.hideLastRowsColumns()
             this.game.reinit()
             this.game.snake.createSnakeBaseBody()
@@ -39,8 +39,6 @@ const app = {
             if(this.paused){
                 clearInterval(this.intervals.snake)
                 clearInterval(this.intervals.items)
-                this.intervals.snake = null
-                this.intervals.items = null
             }else{
                 this.intervals.snake = setInterval(this.move, this.speedSnake)
                 this.intervals.items = setInterval(this.itemDisplay, this.speedItems)
@@ -66,8 +64,6 @@ const app = {
                 this.lost = true
                 clearInterval(this.intervals.snake)
                 clearInterval(this.intervals.items)
-                this.intervals.snake = null
-                this.intervals.items = null
             }
             
             if(!this.game.isGameOver && this.game.snake.bodyElem.length > length){
