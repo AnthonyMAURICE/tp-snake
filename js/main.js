@@ -21,16 +21,14 @@ const app = {
     mounted(){
         this.game.snake.createSnakeBaseBody()
         this.game.setSnakePresence()
-        const body = document.querySelector("body");
-        body.onkeydown = this.setDir
+        this.game.hideLastRowsColumns()
+        this.body.onkeydown = this.setDir
     },
     
     methods: {
         launchGame(){
+            this.paused = false
             this.launched = true
-            this.game.hideLastRowsColumns()
-            const body = document.querySelector("body");
-            body.onkeydown = this.setDir
             this.intervalController()
         },
         intervalController(){
@@ -41,7 +39,7 @@ const app = {
                 this.intervals.items = null
             }else{
                 this.intervals.snake = setInterval(this.move, this.speed)
-                this.intervals.items = setInterval(this.itemDisplay, 5000)
+                this.intervals.items = setInterval(this.itemDisplay, 3000)
             }
         },
         setDir(e){
@@ -70,11 +68,17 @@ const app = {
             
             if(!this.game.isGameOver && this.game.snake.bodyElem.length > length){
                 this.score++
+                if(this.score %10 == 0){
+                    this.speed /= 1.2
+                    this.paused = true
+                    this.intervalController()
+                    this.launchGame()
+                }
             }
         },
         itemDisplay(){
             if(!this.game.isGameOver){
-                if(this.getRandomArbitrary(1, 5) <= 2){
+                if(this.getRandomArbitrary(1, 10) >= 3){
                     this.game.setItem(false)
                 }else{
                     this.game.setItem(true)

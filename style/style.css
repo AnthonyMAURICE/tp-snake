@@ -14,7 +14,12 @@ html{
 
 body{
     font-size: 1.6rem;
+    height: 98vh;
     background-color: var(--color1);
+}
+
+#snakeApp{
+    height: 75%;
 }
 
 h1{

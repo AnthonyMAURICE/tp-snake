@@ -71,7 +71,10 @@ class Game{
                 randElem.style.backgroundColor = _food ? 'green' : 'red'
                 randElem.dataset.type = _food ? 'food' : 'trap'
                 randElem.style.borderRadius = '15px'
-            }   
+            }else{
+                randElem.style.backgroundColor = 'lightblue'
+                randElem.style.border = 'none'
+            }
         }
         
     }
