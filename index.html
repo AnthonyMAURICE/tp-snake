@@ -9,11 +9,17 @@
     <script src="./js/main.js" type="module"></script>
 </head>
 <body>
-    <h1>Snake, the returning return of the revengeful revenge</h1>
+    <h1>Snake : the returning return of the revengeful revenge</h1>
     <div id="snakeApp">
-        <button v-if="!launched" type="button" @click="launchGame">Lancer la partie</button>
+        <div v-if="!launched">
+            <p>-Faites en sorte que le serpent mange la nourriture, en vert, et grandisse.</p>
+            <p>-Attention, les serpents n'étant pas encore bien socialement acceptés, une réaction mesurée est utilisée : des mines.</p>
+            <p>-De plus, selon un ancien personnage historique oriental, le serpent a le choix entre une mine potentielle devant, et une mort certaine en cas de demi-tour.</p>
+            <p>Bon courage !</p>
+            <button type="button" @click="launchGame">Lancer la partie</button>
+        </div>
         <div v-if="launched">
-            <p v-if="!lost">Score : {{ score }}</p>
+            <p v-if="!lost">Score : {{ score }} / Level : {{ level }}</p>
             <div v-if="!lost">
                 <button id="pause" type="button" @click="pause" v-if="!paused">Pause</button>
                 <button id="resume" type="button" @click="pause" v-if="paused">Relancer</button>
@@ -27,7 +33,7 @@
             </table>
             <div id="div" class="score-resumee" v-if="lost">
                 <p  id="lost">PERDU !</p>
-                <p>Votre score est de {{ score }} points</p>
+                <p>Votre score est de {{ score }} point(s)</p>
                 <button type="button" @click="reload">Recommencer</button>
             </div>
         </div>

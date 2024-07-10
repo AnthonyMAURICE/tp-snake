@@ -31,8 +31,9 @@ class Game{
         const gridelems = document.querySelectorAll('td')
         for(let elem of gridelems){
             if(elem.dataset.type != 'food' && elem.dataset.type !='trap'){
-                elem.style.backgroundColor = 'lightblue'
+                elem.style.backgroundColor = 'grey'
                 elem.style.border = 'none'
+                elem.dataset.type = ''
             }
             if(this.checkIfSnakeHead(elem)){
                 elem.style.backgroundColor = '#1d1d1d'
@@ -72,11 +73,10 @@ class Game{
                 randElem.dataset.type = _food ? 'food' : 'trap'
                 randElem.style.borderRadius = '15px'
             }else{
-                randElem.style.backgroundColor = 'lightblue'
+                randElem.style.backgroundColor = 'grey'
                 randElem.style.border = 'none'
             }
         }
-        
     }
 
     eat(){
@@ -102,6 +102,7 @@ class Game{
             this.snake.grow()
         }
     }
+    
 
     teleport(){
         if(this.snake.getPosX() <1 && this.snake.direction == 'ArrowLeft'){
@@ -115,6 +116,13 @@ class Game{
         }else{
             return 'Something went wrong here...'
         }
+    }
+
+    reinit(){
+        const gridelems = document.querySelectorAll('td')
+        gridelems.forEach((elem) => {
+            elem.dataset.type = ''
+        })
     }
 
 }

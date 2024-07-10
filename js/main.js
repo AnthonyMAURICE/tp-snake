@@ -9,6 +9,7 @@ const app = {
             speed: 200,
             lost: false,
             score: 0,
+            level: 1,
             paused: false,
             launched: false,
             body: document.querySelector("body"),
@@ -19,14 +20,16 @@ const app = {
         }
     },
     mounted(){
-        this.game.snake.createSnakeBaseBody()
-        this.game.setSnakePresence()
+        
         this.game.hideLastRowsColumns()
         this.body.onkeydown = this.setDir
     },
     
     methods: {
         launchGame(){
+            this.game.reinit()
+            this.game.snake.createSnakeBaseBody()
+            this.game.setSnakePresence()
             this.paused = false
             this.launched = true
             this.intervalController()
@@ -70,6 +73,7 @@ const app = {
                 this.score++
                 if(this.score %10 == 0){
                     this.speed /= 1.2
+                    this.level++
                     this.paused = true
                     this.intervalController()
                     this.launchGame()
@@ -78,7 +82,7 @@ const app = {
         },
         itemDisplay(){
             if(!this.game.isGameOver){
-                if(this.getRandomArbitrary(1, 10) >= 3){
+                if(this.getRandom(1, 10) >= 4){
                     this.game.setItem(false)
                 }else{
                     this.game.setItem(true)
@@ -88,7 +92,7 @@ const app = {
         reload(){
             location.reload()
         },
-        getRandomArbitrary(min, max) {
+        getRandom(min, max) {
             return Math.random() * (max - min) + min;
         },
         pause(){
