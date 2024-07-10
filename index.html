@@ -13,8 +13,9 @@
     <div id="snakeApp">
         <div v-if="!launched">
             <p>-Faites en sorte que le serpent mange la nourriture, en vert, et grandisse.</p>
+            <p>-Tous les 10 cycles de croissance, le terrain est réinitialisé et la vitesse du serpent augmente.</p>
             <p>-Attention, les serpents n'étant pas encore bien socialement acceptés, une réaction mesurée est utilisée : des mines.</p>
-            <p>-De plus, selon un ancien personnage historique oriental, le serpent a le choix entre une mine potentielle devant, et une mort certaine en cas de demi-tour.</p>
+            <p>-De plus, selon un ancien personnage historique oriental : le serpent a le choix entre une mine potentielle devant et une mort certaine en cas de demi-tour.</p>
             <p>Bon courage !</p>
             <button type="button" @click="launchGame">Lancer la partie</button>
         </div>
@@ -37,7 +38,6 @@
                 <button type="button" @click="reload">Recommencer</button>
             </div>
         </div>
-            
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 :root{
-    --color1: rgb(66, 66, 66);
+    --color1: rgb(50, 50, 50);
     --color2: red;
     --color3: grey;
     --color4: white;
@@ -33,7 +33,7 @@ h1{
 table{
     border-spacing: 0;
     border: 2px solid var(--color5);
-    margin: auto;
+    margin: 10px auto;
     background-color: var(--color3);
 }
 
