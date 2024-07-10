@@ -3,11 +3,11 @@ class Game{
         this.score = 0
         this.level = 1
         this.isGameOver = false
-        this.height = height
-        this.width = width
+        this.height = height + 2
+        this.width = width + 2
         this.snake = snake
         this.food = food
-        this.foodArray = []
+        this.itemArray = []
     }
 
     getHeigth(){
@@ -18,10 +18,19 @@ class Game{
         return this.width
     }
 
+    hideLastRowsColumns(){
+        const gridelems = document.querySelectorAll('td')
+        gridelems.forEach((elem) => {
+            if(elem.dataset.posx == this.width || elem.dataset.posy == this.height || elem.dataset.posx == 1 || elem.dataset.posy == 1){
+                elem.style.display = 'none'
+            }
+        })
+    }
+
     setSnakePresence(){
         const gridelems = document.querySelectorAll('td')
         for(let elem of gridelems){
-            if(elem.style.backgroundColor != 'green'){
+            if(elem.dataset.type != 'food' && elem.dataset.type !='trap'){
                 elem.style.backgroundColor = 'lightblue'
                 elem.style.border = 'none'
             }
@@ -53,13 +62,14 @@ class Game{
             return false
         }
     }
-    setFood(){
+    setItem(_food){
         const gridelems = document.querySelectorAll('td')
         let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
-        this.foodArray.push(randElem)
+        this.itemArray.push(randElem)
         for(let item of this.snake.bodyElem){
             if(!this.checkIfSnakeBody(item, randElem) && !this.checkIfSnakeHead(randElem)){
-                randElem.style.backgroundColor = 'green'
+                randElem.style.backgroundColor = _food ? 'green' : 'red'
+                randElem.dataset.type = _food ? 'food' : 'trap'
                 randElem.style.borderRadius = '15px'
             }   
         }
@@ -68,26 +78,37 @@ class Game{
 
     eat(){
         let growing = false
-        for(let elem of this.foodArray){
+        for(let elem of this.itemArray){
             if(this.snake.getPosX() == elem.dataset.posx && this.snake.getPosY() == elem.dataset.posy){
-                growing = true
+                if(elem.dataset.type == 'food'){
+                    growing = true
+                    elem.dataset.type = ''
+                }else if(elem.dataset.type == 'trap'){
+                    elem.style.backgroundColor = 'red'
+                    elem.style.borderRadius = '15px'
+                    elem.style.border = '5px solid goldenrod'
+                    elem.classList.add('anim')
+                    this.isGameOver = true
+                }else{
+                    elem.dataset.type = ''
+                }
+                
             }
         }
         if(growing){
-            this.food.isOnGrid--
             this.snake.grow()
         }
     }
 
     teleport(){
-        if(this.snake.getPosX() == 0 && this.snake.direction == 'ArrowLeft'){
+        if(this.snake.getPosX() <1 && this.snake.direction == 'ArrowLeft'){
             this.snake.posX = this.width
         }else if(this.snake.getPosX() > this.width && this.snake.direction == 'ArrowRight'){
-            this.snake.posX = 0
-        }else if(this.snake.getPosY() == 0 && this.snake.direction == 'ArrowUp'){
+            this.snake.posX = 1
+        }else if(this.snake.getPosY() < 1 && this.snake.direction == 'ArrowUp'){
             this.snake.posY = this.height
         }else if(this.snake.getPosY() > this.height && this.snake.direction == 'ArrowDown'){
-            this.snake.posY = 0
+            this.snake.posY = 1
         }else{
             return 'Something went wrong here...'
         }

@@ -1,36 +1,47 @@
 import { Game } from './Game.js'
 import { SnakeHead } from './SnakeHead.js'
 import { Food } from './Food.js'
-import { Bomb } from './Bomb.js'
 
 const app = {
     data() {
         return {
-            game: new Game(25, 30, new SnakeHead(10, 10), new Food()),
+            game: new Game(20, 30, new SnakeHead(10, 10), new Food()),
             speed: 200,
             lost: false,
             score: 0,
-            body: document.querySelector("body")
+            paused: false,
+            launched: false,
+            body: document.querySelector("body"),
+            intervals: {
+                snake: null,
+                items: null
+            }
         }
     },
     mounted(){
         this.game.snake.createSnakeBaseBody()
         this.game.setSnakePresence()
         const body = document.querySelector("body");
-        this.launchGame()
         body.onkeydown = this.setDir
     },
     
     methods: {
         launchGame(){
-            let intervalSnake = null
-            let intervalFood = null
-            if(this.lost){
-                clearInterval(intervalSnake)
-                clearInterval(intervalFood)
+            this.launched = true
+            this.game.hideLastRowsColumns()
+            const body = document.querySelector("body");
+            body.onkeydown = this.setDir
+            this.intervalController()
+        },
+        intervalController(){
+            if(this.paused){
+                clearInterval(this.intervals.snake)
+                clearInterval(this.intervals.items)
+                this.intervals.snake = null
+                this.intervals.items = null
             }else{
-                intervalSnake = setInterval(this.move, this.speed)
-                intervalFood = setInterval(this.foodDisplay, 5000)
+                this.intervals.snake = setInterval(this.move, this.speed)
+                this.intervals.items = setInterval(this.itemDisplay, 5000)
             }
         },
         setDir(e){
@@ -43,28 +54,42 @@ const app = {
             this.game.teleport()
             this.game.setSnakePresence()
             this.game.eat()
-            this.game.isGameOver = this.game.snake.checkCollision()
-            
+            if(!this.game.isGameOver){
+                this.game.isGameOver = this.game.snake.checkCollision()
+            }
             }else{
                 if(document.getElementById('game-grid') != null){
                     document.getElementById('game-grid').remove()
                 }
                 this.lost = true
-                this.launchGame()
+                clearInterval(this.intervals.snake)
+                clearInterval(this.intervals.items)
+                this.intervals.snake = null
+                this.intervals.items = null
             }
             
             if(!this.game.isGameOver && this.game.snake.bodyElem.length > length){
                 this.score++
             }
         },
-        foodDisplay(){
-            if(this.game.food.isOnGrid < 3 && !this.lost){
-                this.game.setFood()
-                this.game.food.isOnGrid++
+        itemDisplay(){
+            if(!this.game.isGameOver){
+                if(this.getRandomArbitrary(1, 5) <= 2){
+                    this.game.setItem(false)
+                }else{
+                    this.game.setItem(true)
+                }
             }
         },
         reload(){
             location.reload()
+        },
+        getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        },
+        pause(){
+            this.paused = this.paused ? false : true
+            this.intervalController()
         }
     }
 }

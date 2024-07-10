@@ -11,20 +11,27 @@
 <body>
     <h1>Snake, the returning return of the revengeful revenge</h1>
     <div id="snakeApp">
-        <p v-if="!lost">Score : {{ score }}</p>
-        <table id="game-grid">
-            <tbody>
-                <tr v-for="posY of game.getHeigth()">
-                    <td :data-posx="posX" :data-posy="posY" v-for="posX of game.getWidth()"></td>
-                </tr>
-            </tbody>
-            <div id="score-div" v-if="lost">
+        <button v-if="!launched" type="button" @click="launchGame">Lancer la partie</button>
+        <div v-if="launched">
+            <p v-if="!lost">Score : {{ score }}</p>
+            <div v-if="!lost">
+                <button id="pause" type="button" @click="pause" v-if="!paused">Pause</button>
+                <button id="resume" type="button" @click="pause" v-if="paused">Relancer</button>
+            </div>
+            <table id="game-grid">
+                <tbody>
+                    <tr v-for="posY of game.getHeigth()">
+                        <td :data-posx="posX" :data-posy="posY" v-for="posX of game.getWidth()"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="div" class="score-resumee" v-if="lost">
                 <p  id="lost">PERDU !</p>
                 <p>Votre score est de {{ score }} points</p>
                 <button type="button" @click="reload">Recommencer</button>
             </div>
+        </div>
             
-        </table>
     </div>
 </body>
 </html>

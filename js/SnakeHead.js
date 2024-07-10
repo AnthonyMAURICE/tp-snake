@@ -1,4 +1,5 @@
 import { Direction } from './Directions.js'
+import { Game } from './Game.js'
 import { MovingItems } from './MovingItems.js'
 import { SnakeBodyElem } from './SnakeBodyElem.js'
 
@@ -12,7 +13,6 @@ class SnakeHead extends MovingItems{
     createSnakeBaseBody(){
         this.bodyElem.push(new SnakeBodyElem(this.posX -1, this.posY))
         this.bodyElem.push(new SnakeBodyElem(this.posX -2, this.posY))
-        this.bodyElem.push(new SnakeBodyElem(this.posX -3, this.posY))
     }
 
     moving(){
@@ -57,6 +57,7 @@ class SnakeHead extends MovingItems{
     grow(){
         this.bodyElem.push(new SnakeBodyElem(this.bodyElem[this.bodyElem.length -1].getPosX, this.bodyElem[this.bodyElem.length -1].posY))
     }
+
 
 }
 
