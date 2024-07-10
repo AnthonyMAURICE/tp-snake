@@ -5,8 +5,9 @@ import { Food } from './Food.js'
 const app = {
     data() {
         return {
-            game: new Game(20, 30, new SnakeHead(10, 10), new Food()),
-            speed: 200,
+            game: '',
+            speedSnake: 200,
+            speedItems: 3000,
             lost: false,
             score: 0,
             level: 1,
@@ -20,13 +21,13 @@ const app = {
         }
     },
     mounted(){
-        
-        this.game.hideLastRowsColumns()
         this.body.onkeydown = this.setDir
     },
     
     methods: {
         launchGame(){
+            this.game = new Game(20, 30, new SnakeHead(15, 10), new Food())
+            this.game.hideLastRowsColumns()
             this.game.reinit()
             this.game.snake.createSnakeBaseBody()
             this.game.setSnakePresence()
@@ -41,8 +42,8 @@ const app = {
                 this.intervals.snake = null
                 this.intervals.items = null
             }else{
-                this.intervals.snake = setInterval(this.move, this.speed)
-                this.intervals.items = setInterval(this.itemDisplay, 3000)
+                this.intervals.snake = setInterval(this.move, this.speedSnake)
+                this.intervals.items = setInterval(this.itemDisplay, this.speedItems)
             }
         },
         setDir(e){
@@ -72,7 +73,8 @@ const app = {
             if(!this.game.isGameOver && this.game.snake.bodyElem.length > length){
                 this.score++
                 if(this.score %10 == 0){
-                    this.speed /= 1.2
+                    this.speedSnake /= 1.2
+                    this.speedItems /= 2
                     this.level++
                     this.paused = true
                     this.intervalController()

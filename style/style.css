@@ -16,6 +16,7 @@ html{
 
 body{
     font-size: 1.6rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     height: 98vh;
     background-color: var(--color1);
 }
