@@ -9,6 +9,7 @@ class Game{
         this.height = height
         this.width = width
         this.snake = snake
+        this.foodOrTrap = null
         this.itemArray = []
     }
 
@@ -38,13 +39,13 @@ class Game{
                 elem.dataset.type = ''
             }
             if(this.checkIfSnakeHead(elem)){
-                elem.style.backgroundColor = '#1d1d1d'
+                elem.style.backgroundColor = this.snake.background
                 elem.style.border = '2px solid black'
                 elem.style.borderRadius = '0px'
             }
             for(let item of this.snake.bodyElem){
                 if(this.checkIfSnakeBody(item, elem)){
-                    elem.style.backgroundColor = '#1d1d1d'
+                    elem.style.backgroundColor = this.snake.background
                     elem.style.border = '2px solid black'
                     elem.style.borderRadius = '0px'
                 }
@@ -66,24 +67,23 @@ class Game{
         }
     }
     setItem(_food){
+        let occupiedSpace = false
         const gridelems = document.querySelectorAll('td')
-        let foodOrTrap = null
         let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
-        if(_food){
-            foodOrTrap = new Food(randElem.posx, randElem.posy)
-        }else{
-            foodOrTrap = new Bomb(randElem.posx, randElem.posy)
-        }
+        this.foodOrTrap = _food ? new Food(randElem.posx, randElem.posy) : new Bomb(randElem.posx, randElem.posy)
         this.itemArray.push(randElem)
         for(let item of this.snake.bodyElem){
-            if(!this.checkIfSnakeBody(item, randElem) && !this.checkIfSnakeHead(randElem)){
-                randElem.style.backgroundColor = foodOrTrap.background
-                randElem.dataset.type = foodOrTrap.type
-                randElem.style.borderRadius = '15px'
-            }else{
-                randElem.style.backgroundColor = 'grey'
-                randElem.style.border = 'none'
+            if(this.checkIfSnakeBody(item, randElem) || this.checkIfSnakeHead(randElem)){
+                occupiedSpace = true
             }
+        }
+        if(!occupiedSpace){
+            randElem.style.backgroundColor = this.foodOrTrap.background
+            randElem.dataset.type = this.foodOrTrap.type
+            randElem.style.borderRadius = '15px'
+        }else{
+            randElem.style.backgroundColor = 'grey'
+            randElem.style.border = 'none'
         }
     }
 

@@ -8,6 +8,7 @@ class SnakeHead extends MovingItems{
         super(posX, posY)
         this.bodyElem = []
         this.direction = Direction.Right.name
+        this.background = '#1d1d1d'
     }
 
     createSnakeBaseBody(){
