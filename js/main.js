@@ -29,7 +29,9 @@ const app = {
             this.paused = false
             this.launched = true
             this.game = new Game(22, 32, new SnakeHead(15, 10))
-            this.game.hideLastRowsColumns()
+            if(this.level == 1){
+                this.game.hideLastRowsColumns()
+            }
             this.game.reinit()
             this.game.snake.createSnakeBaseBody()
             this.game.setSnakePresence()

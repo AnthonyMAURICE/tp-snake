@@ -15,6 +15,8 @@ class SnakeHead extends MovingItems{
         this.bodyElem = []
         this.bodyElem.push(new SnakeBodyElem(this.posX -1, this.posY))
         this.bodyElem.push(new SnakeBodyElem(this.posX -2, this.posY))
+        this.bodyElem.push(new SnakeBodyElem(this.posX -3, this.posY))
+        this.bodyElem.push(new SnakeBodyElem(this.posX -4, this.posY))
     }
 
     moving(){
