@@ -1,3 +1,6 @@
+import { Food } from './Food.js'
+import { Bomb } from './Bomb.js'
+
 class Game{
     constructor(height, width, snake, food){
         this.score = 0
@@ -6,7 +9,6 @@ class Game{
         this.height = height
         this.width = width
         this.snake = snake
-        this.food = food
         this.itemArray = []
     }
 
@@ -65,12 +67,18 @@ class Game{
     }
     setItem(_food){
         const gridelems = document.querySelectorAll('td')
+        let foodOrTrap = null
         let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
+        if(_food){
+            foodOrTrap = new Food(randElem.posx, randElem.posy)
+        }else{
+            foodOrTrap = new Bomb(randElem.posx, randElem.posy)
+        }
         this.itemArray.push(randElem)
         for(let item of this.snake.bodyElem){
             if(!this.checkIfSnakeBody(item, randElem) && !this.checkIfSnakeHead(randElem)){
-                randElem.style.backgroundColor = _food ? 'green' : 'red'
-                randElem.dataset.type = _food ? 'food' : 'trap'
+                randElem.style.backgroundColor = foodOrTrap.background
+                randElem.dataset.type = foodOrTrap.type
                 randElem.style.borderRadius = '15px'
             }else{
                 randElem.style.backgroundColor = 'grey'
