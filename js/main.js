@@ -24,7 +24,6 @@ const app = {
     mounted(){
         this.body.onkeydown = this.setDir
     },
-    
     methods: {
         launchGame(){
             this.paused = false
