@@ -1,6 +1,5 @@
 import { Game } from './Game.js'
 import { SnakeHead } from './SnakeHead.js'
-import { Food } from './Food.js'
 
 const app = {
     data() {

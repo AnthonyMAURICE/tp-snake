@@ -1,5 +1,4 @@
 import { Direction } from './Directions.js'
-import { Game } from './Game.js'
 import { MovingItems } from './MovingItems.js'
 import { SnakeBodyElem } from './SnakeBodyElem.js'
 
