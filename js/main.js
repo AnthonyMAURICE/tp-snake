@@ -120,7 +120,7 @@ const app = {
                 }
             }
         },
-        setItem(_food){
+        setItem(_food){ // à déplacer dans Game.js
             let occupiedSpace = false
             const gridelems = document.querySelectorAll('td')
             let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]

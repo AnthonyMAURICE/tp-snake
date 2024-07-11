@@ -1,5 +1,5 @@
 class Game{
-    constructor(height, width, snake, food){
+    constructor(height, width, snake){
         this.score = 0
         this.level = 1
         this.isGameOver = false
