@@ -131,7 +131,7 @@ const app = {
                     occupiedSpace = true
                 }
             }
-            if(!occupiedSpace){
+            if(!occupiedSpace){ // à conserver car affichage, prendra le retour de la fonction setItem dans Game.js
                 randElem.style.backgroundColor = this.game.foodOrTrap.background
                 randElem.dataset.type = this.game.foodOrTrap.type
                 randElem.style.borderRadius = '15px'
