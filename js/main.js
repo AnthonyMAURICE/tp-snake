@@ -1,5 +1,7 @@
 import { Game } from './Game.js'
 import { SnakeHead } from './SnakeHead.js'
+import { Food } from './Food.js'
+import { Bomb } from './Bomb.js'
 
 const app = {
     data() {
@@ -29,12 +31,43 @@ const app = {
             this.launched = true
             this.game = new Game(22, 32, new SnakeHead(15, 10))
             if(this.level == 1){
-                this.game.hideLastRowsColumns()
+                this.hideLastRowsColumns()
             }
             this.game.reinit()
             this.game.snake.createSnakeBaseBody()
-            this.game.setSnakePresence()
+            this.setSnakePresence()
             this.intervalController()
+        },
+        hideLastRowsColumns(){
+            const gridelems = document.querySelectorAll('td')
+            gridelems.forEach((elem) => {
+                if(elem.dataset.posx == this.game.width || elem.dataset.posy == this.game.height || elem.dataset.posx == 1 || elem.dataset.posy == 1){
+                    elem.style.display = 'none'
+                }
+            })
+        },
+    
+        setSnakePresence(){
+            const gridelems = document.querySelectorAll('td')
+            for(let elem of gridelems){
+                if(elem.dataset.type != 'food' && elem.dataset.type !='trap'){
+                    elem.style.backgroundColor = 'grey'
+                    elem.style.border = 'none'
+                    elem.dataset.type = ''
+                }
+                if(this.game.checkIfSnakeHead(elem)){
+                    elem.style.backgroundColor = this.game.snake.background
+                    elem.style.border = '2px solid black'
+                    elem.style.borderRadius = '0px'
+                }
+                for(let item of this.game.snake.bodyElem){
+                    if(this.game.checkIfSnakeBody(item, elem)){
+                        elem.style.backgroundColor = this.game.snake.background
+                        elem.style.border = '2px solid black'
+                        elem.style.borderRadius = '0px'
+                    }
+                }
+            }
         },
         intervalController(){
             if(this.paused){
@@ -53,7 +86,7 @@ const app = {
             if(!this.game.isGameOver){
             this.game.snake.moving()
             this.game.teleport()
-            this.game.setSnakePresence()
+            this.setSnakePresence()
             this.game.eat()
             if(!this.game.isGameOver){
                 this.game.isGameOver = this.game.snake.checkCollision()
@@ -82,10 +115,30 @@ const app = {
         itemDisplay(){
             if(!this.game.isGameOver){
                 if(this.getRandom(1, 10) >= 4){
-                    this.game.setItem(false)
+                    this.setItem(false)
                 }else{
-                    this.game.setItem(true)
+                    this.setItem(true)
                 }
+            }
+        },
+        setItem(_food){
+            let occupiedSpace = false
+            const gridelems = document.querySelectorAll('td')
+            let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
+            this.game.foodOrTrap = _food ? new Food(randElem.posx, randElem.posy) : new Bomb(randElem.posx, randElem.posy)
+            this.game.itemArray.push(randElem)
+            for(let item of this.game.snake.bodyElem){
+                if(this.game.checkIfSnakeBody(item, randElem) || this.game.checkIfSnakeHead(randElem) || this.game.checkIfFoodOrTrap(randElem)){
+                    occupiedSpace = true
+                }
+            }
+            if(!occupiedSpace){
+                randElem.style.backgroundColor = this.game.foodOrTrap.background
+                randElem.dataset.type = this.game.foodOrTrap.type
+                randElem.style.borderRadius = '15px'
+            }else{
+                randElem.style.backgroundColor = 'grey'
+                randElem.style.border = 'none'
             }
         },
         reload(){

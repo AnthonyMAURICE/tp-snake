@@ -1,6 +1,3 @@
-import { Food } from './Food.js'
-import { Bomb } from './Bomb.js'
-
 class Game{
     constructor(height, width, snake, food){
         this.score = 0
@@ -21,37 +18,6 @@ class Game{
         return this.width
     }
 
-    hideLastRowsColumns(){
-        const gridelems = document.querySelectorAll('td')
-        gridelems.forEach((elem) => {
-            if(elem.dataset.posx == this.width || elem.dataset.posy == this.height || elem.dataset.posx == 1 || elem.dataset.posy == 1){
-                elem.style.display = 'none'
-            }
-        })
-    }
-
-    setSnakePresence(){
-        const gridelems = document.querySelectorAll('td')
-        for(let elem of gridelems){
-            if(elem.dataset.type != 'food' && elem.dataset.type !='trap'){
-                elem.style.backgroundColor = 'grey'
-                elem.style.border = 'none'
-                elem.dataset.type = ''
-            }
-            if(this.checkIfSnakeHead(elem)){
-                elem.style.backgroundColor = this.snake.background
-                elem.style.border = '2px solid black'
-                elem.style.borderRadius = '0px'
-            }
-            for(let item of this.snake.bodyElem){
-                if(this.checkIfSnakeBody(item, elem)){
-                    elem.style.backgroundColor = this.snake.background
-                    elem.style.border = '2px solid black'
-                    elem.style.borderRadius = '0px'
-                }
-            }
-        }
-    }
     checkIfSnakeHead(_elem){
         if(this.snake.getPosX() == _elem.dataset.posx && this.snake.getPosY() == _elem.dataset.posy){
             return true
@@ -66,24 +32,12 @@ class Game{
             return false
         }
     }
-    setItem(_food){
-        let occupiedSpace = false
-        const gridelems = document.querySelectorAll('td')
-        let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
-        this.foodOrTrap = _food ? new Food(randElem.posx, randElem.posy) : new Bomb(randElem.posx, randElem.posy)
-        this.itemArray.push(randElem)
-        for(let item of this.snake.bodyElem){
-            if(this.checkIfSnakeBody(item, randElem) || this.checkIfSnakeHead(randElem)){
-                occupiedSpace = true
-            }
-        }
-        if(!occupiedSpace){
-            randElem.style.backgroundColor = this.foodOrTrap.background
-            randElem.dataset.type = this.foodOrTrap.type
-            randElem.style.borderRadius = '15px'
+
+    checkIfFoodOrTrap(_elem){
+        if(_elem.dataset.type == 'food' || _elem.dataset.type == 'trap'){
+            return true
         }else{
-            randElem.style.backgroundColor = 'grey'
-            randElem.style.border = 'none'
+            return false
         }
     }
 

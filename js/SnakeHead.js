@@ -35,7 +35,7 @@ class SnakeHead extends MovingItems{
                 this.posX++
                 break
             default:
-                'something went really wrong'
+                console.log('something went really wrong')
         }
         for(let i = this.bodyElem.length - 1; i > 0; i--){
             this.bodyElem[i].moving(this.bodyElem[i-1].getPosX(), this.bodyElem[i-1].getPosY())
