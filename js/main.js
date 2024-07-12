@@ -15,18 +15,15 @@ const app = {
             paused: false,
             launched: false,
             body: document.querySelector("body"),
-            gridelems: document.querySelectorAll('td'),
             intervals: {
                 snake: null,
                 items: null
             }
         }
     },
-    mounted(){
-        this.body.onkeydown = this.setDir
-    },
     methods: {
         launchGame(){
+            this.body.onkeydown = this.setDir
             this.paused = false
             this.launched = true
             this.game = new Game(22, 32, new SnakeHead(15, 10))
