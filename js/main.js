@@ -15,6 +15,7 @@ const app = {
             paused: false,
             launched: false,
             body: document.querySelector("body"),
+            gridelems: document.querySelectorAll('td'),
             intervals: {
                 snake: null,
                 items: null
@@ -60,7 +61,7 @@ const app = {
                     elem.style.borderRadius = '0px'
                 }
                 for(let item of this.game.snake.bodyElem){
-                    if(this.game.checkIfSnakeBody(item, elem)){
+                    if(this.game.checkIfSnakeBody(item, elem) || this.game.checkIfSnakeHead(elem)){
                         elem.style.backgroundColor = this.game.snake.background
                         elem.style.border = '2px solid black'
                         elem.style.borderRadius = '0px'
@@ -94,7 +95,7 @@ const app = {
                 if(document.getElementById('game-grid') != null){
                     document.getElementById('game-grid').remove()
                 }
-                this.lost = true
+                this.lost = this.game.isGameOver
                 clearInterval(this.intervals.snake)
                 clearInterval(this.intervals.items)
             }
@@ -120,7 +121,7 @@ const app = {
                 }
             }
         },
-        setItem(_food){ // à déplacer dans Game.js
+        setItem(_food){
             let occupiedSpace = false
             const gridelems = document.querySelectorAll('td')
             let randElem = gridelems[Math.floor(Math.random()*gridelems.length)]
@@ -131,7 +132,7 @@ const app = {
                     occupiedSpace = true
                 }
             }
-            if(!occupiedSpace){ // à conserver car affichage, prendra le retour de la fonction setItem dans Game.js
+            if(!occupiedSpace){
                 randElem.style.backgroundColor = this.game.foodOrTrap.background
                 randElem.dataset.type = this.game.foodOrTrap.type
                 randElem.style.borderRadius = '15px'
