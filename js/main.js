@@ -128,9 +128,6 @@ const app = {
                 randElem.style.backgroundColor = this.game.foodOrTrap.background
                 randElem.dataset.type = this.game.foodOrTrap.type
                 randElem.style.borderRadius = '15px'
-            }else{
-                randElem.style.backgroundColor = 'grey'
-                randElem.style.border = 'none'
             }
         },
         reload(){
