@@ -52,11 +52,6 @@ const app = {
                     elem.style.border = 'none'
                     elem.dataset.type = ''
                 }
-                if(this.game.checkIfSnakeHead(elem)){
-                    elem.style.backgroundColor = this.game.snake.background
-                    elem.style.border = '2px solid black'
-                    elem.style.borderRadius = '0px'
-                }
                 for(let item of this.game.snake.bodyElem){
                     if(this.game.checkIfSnakeBody(item, elem) || this.game.checkIfSnakeHead(elem)){
                         elem.style.backgroundColor = this.game.snake.background
