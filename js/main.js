@@ -96,7 +96,7 @@ const app = {
                 this.score++
                 if(this.score %10 == 0){
                     this.speedSnake /= 1.2
-                    this.speedItems /= 2
+                    this.speedItems /= 1.2
                     this.level++
                     this.paused = true
                     this.intervalController()
