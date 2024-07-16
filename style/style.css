@@ -70,6 +70,10 @@ div{
     align-items: center;
 }
 
+.hidden{
+    display: none;
+}
+
 .score-resumee{
     height: 50vh;
     display: flex;

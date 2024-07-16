@@ -26,24 +26,12 @@ const app = {
             this.body.onkeydown = this.setDir
             this.paused = false
             this.launched = true
-            this.game = new Game(22, 32, new SnakeHead(15, 10))
-            if(this.level == 1){
-                this.hideLastRowsColumns()
-            }
+            this.game = new Game(21, 31, new SnakeHead(15, 10))
             this.game.reinit()
             this.game.snake.createSnakeBaseBody()
             this.setSnakePresence()
             this.intervalController()
         },
-        hideLastRowsColumns(){
-            const gridelems = document.querySelectorAll('td')
-            gridelems.forEach((elem) => {
-                if(elem.dataset.posx == this.game.width || elem.dataset.posy == this.game.height || elem.dataset.posx == 1 || elem.dataset.posy == 1){
-                    elem.style.display = 'none'
-                }
-            })
-        },
-    
         setSnakePresence(){
             const gridelems = document.querySelectorAll('td')
             for(let elem of gridelems){
